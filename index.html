@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>藍新科技點餐單</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="store-label">企業活動點餐</p>
+          <h1>藍新科技點餐單</h1>
+          <p class="hero-copy">選擇餐點後加入購物車，確認數量與備註即可產生訂單摘要。</p>
+        </div>
+        <div class="table-card" aria-label="訂單資訊">
+          <span>訂單代號</span>
+          <strong id="orderCode">LN-0710</strong>
+          <small id="sourceState">正在讀取菜單</small>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="menu-panel" aria-label="餐點清單">
+          <div class="toolbar">
+            <div class="search-wrap">
+              <input id="searchInput" type="search" placeholder="搜尋餐點" autocomplete="off">
+            </div>
+            <select id="sortSelect" aria-label="排序方式">
+              <option value="default">預設排序</option>
+              <option value="name">名稱排序</option>
+            </select>
+          </div>
+          <nav id="categoryTabs" class="tabs" aria-label="餐點分類"></nav>
+          <div id="menuList" class="menu-list"></div>
+        </section>
+
+        <aside class="cart-panel" aria-label="購物車">
+          <div class="cart-head">
+            <div>
+              <p class="section-kicker">購物車</p>
+              <h2>目前訂單</h2>
+            </div>
+            <button id="clearCart" class="ghost-button" type="button">清空</button>
+          </div>
+
+          <div id="cartItems" class="cart-items empty">尚未加入餐點</div>
+
+          <label class="note-field">
+            <span>訂單備註</span>
+            <textarea id="orderNote" rows="4" placeholder="例如：不要辣、分開包、會議室 A"></textarea>
+          </label>
+
+          <div class="summary">
+            <div>
+              <span>品項數</span>
+              <strong id="totalCount">0</strong>
+            </div>
+            <div>
+              <span>總金額</span>
+              <strong id="totalPrice">$0</strong>
+            </div>
+          </div>
+
+          <button id="submitOrder" class="primary-button" type="button">產生訂單摘要</button>
+        </aside>
+      </main>
+    </div>
+
+    <dialog id="orderDialog">
+      <div class="dialog-body">
+        <div class="dialog-title">
+          <p class="section-kicker">訂單摘要</p>
+          <h2>藍新科技</h2>
+        </div>
+        <pre id="orderSummary"></pre>
+        <div class="dialog-actions">
+          <button id="copySummary" class="primary-button" type="button">複製摘要</button>
+          <button id="closeDialog" class="ghost-button" type="button">關閉</button>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
