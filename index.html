@@ -1,87 +1,89 @@
 <!doctype html>
 <html lang="zh-Hant">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>藍新科技點餐單</title>
-    <link rel="stylesheet" href="./styles.css">
-  </head>
-  <body>
-    <div class="app-shell">
-      <header class="hero">
-        <div>
-          <p class="store-label">企業活動點餐</p>
-          <h1>藍新科技點餐單</h1>
-          <p class="hero-copy">選擇餐點後加入購物車，確認數量與備註即可產生訂單摘要。</p>
-        </div>
-        <div class="table-card" aria-label="訂單資訊">
-          <span>訂單代號</span>
-          <strong id="orderCode">LN-0710</strong>
-          <small id="sourceState">正在讀取菜單</small>
-        </div>
-      </header>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>藍新科技課程點餐單</title>
+  <meta name="description" content="藍新科技課程點餐單，整理 AI 自媒體、剪映實戰、NCN 周三課程等課程項目，可加入選課清單並產生摘要。">
+  <link rel="stylesheet" href="./styles.css?v=20260617214500">
+</head>
+<body>
+  <main class="app order-app">
+    <section class="hero order-hero">
+      <div>
+        <p class="eyebrow">Lanxin Course Menu</p>
+        <h1>藍新科技課程點餐單</h1>
+        <p>把你給過的課程整理成菜單，學員可以像點餐一樣選課，最後產生選課摘要。</p>
+      </div>
+      <aside class="hero-badge">
+        <span>目前課程</span>
+        <strong>3</strong>
+        <small>獨立課程菜單</small>
+      </aside>
+    </section>
 
-      <main class="layout">
-        <section class="menu-panel" aria-label="餐點清單">
-          <div class="toolbar">
-            <div class="search-wrap">
-              <input id="searchInput" type="search" placeholder="搜尋餐點" autocomplete="off">
-            </div>
-            <select id="sortSelect" aria-label="排序方式">
-              <option value="default">預設排序</option>
-              <option value="name">名稱排序</option>
+    <section class="order-layout">
+      <section class="panel menu-panel">
+        <div class="menu-top">
+          <div>
+            <p class="eyebrow">課程菜單</p>
+            <h2>選擇想報名的課程</h2>
+          </div>
+          <div class="menu-tools">
+            <input id="searchInput" type="search" placeholder="搜尋課程、主題或地點" autocomplete="off">
+            <select id="categorySelect" aria-label="課程分類">
+              <option value="全部">全部課程</option>
+              <option value="AI 自媒體">AI 自媒體</option>
+              <option value="影音剪輯">影音剪輯</option>
+              <option value="NCN">NCN</option>
             </select>
           </div>
-          <nav id="categoryTabs" class="tabs" aria-label="餐點分類"></nav>
-          <div id="menuList" class="menu-list"></div>
-        </section>
+        </div>
+        <div class="course-menu" id="courseMenu"></div>
+      </section>
 
-        <aside class="cart-panel" aria-label="購物車">
-          <div class="cart-head">
-            <div>
-              <p class="section-kicker">購物車</p>
-              <h2>目前訂單</h2>
-            </div>
-            <button id="clearCart" class="ghost-button" type="button">清空</button>
+      <aside class="panel cart-panel">
+        <div class="cart-head">
+          <div>
+            <p class="eyebrow">選課清單</p>
+            <h2>已選課程</h2>
           </div>
+          <button type="button" class="clear-button" id="clearCart">清空</button>
+        </div>
+        <div class="cart-list empty" id="cartList">尚未加入課程</div>
 
-          <div id="cartItems" class="cart-items empty">尚未加入餐點</div>
-
-          <label class="note-field">
-            <span>訂單備註</span>
-            <textarea id="orderNote" rows="4" placeholder="例如：不要辣、分開包、會議室 A"></textarea>
+        <form class="order-form" id="orderForm">
+          <label>姓名
+            <input name="name" placeholder="請輸入姓名">
           </label>
-
-          <div class="summary">
-            <div>
-              <span>品項數</span>
-              <strong id="totalCount">0</strong>
-            </div>
-            <div>
-              <span>總金額</span>
-              <strong id="totalPrice">$0</strong>
-            </div>
+          <label>聯絡方式
+            <input name="contact" placeholder="Line、電話或備註">
+          </label>
+          <label>備註
+            <textarea name="note" rows="4" placeholder="例如：想報剪映 6/24、幫朋友一起報名"></textarea>
+          </label>
+          <div class="order-total">
+            <span>課程數</span>
+            <strong id="totalCount">0</strong>
           </div>
+          <button type="submit">產生選課摘要</button>
+        </form>
+      </aside>
+    </section>
 
-          <button id="submitOrder" class="primary-button" type="button">產生訂單摘要</button>
-        </aside>
-      </main>
-    </div>
-
-    <dialog id="orderDialog">
-      <div class="dialog-body">
-        <div class="dialog-title">
-          <p class="section-kicker">訂單摘要</p>
-          <h2>藍新科技</h2>
+    <dialog id="summaryDialog">
+      <section class="summary-dialog">
+        <p class="eyebrow">選課摘要</p>
+        <h2>藍新科技課程點餐單</h2>
+        <pre id="summaryText"></pre>
+        <div class="summary-actions">
+          <button type="button" id="copySummary">複製摘要</button>
+          <button type="button" class="clear-button" id="closeSummary">關閉</button>
         </div>
-        <pre id="orderSummary"></pre>
-        <div class="dialog-actions">
-          <button id="copySummary" class="primary-button" type="button">複製摘要</button>
-          <button id="closeDialog" class="ghost-button" type="button">關閉</button>
-        </div>
-      </div>
+      </section>
     </dialog>
+  </main>
 
-    <script src="./script.js"></script>
-  </body>
+  <script src="./script.js?v=20260617214500"></script>
+</body>
 </html>
